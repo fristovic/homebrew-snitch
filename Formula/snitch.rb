@@ -5,29 +5,43 @@
 class Snitch < Formula
   desc "Catch Cursor agent lies in prose — local lie detector"
   homepage "https://github.com/fristovic/snitch"
-  version "0.1.3"
+  version "0.1.4"
   license "MIT"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/fristovic/snitch/releases/download/v0.1.3/snitch_0.1.3_darwin_amd64.tar.gz"
-    sha256 "2f0f4fb6ba94e6a8b727ef3806135cab59f829e6a99ba73dbae560f0a66e7e15"
+    url "https://github.com/fristovic/snitch/releases/download/v0.1.4/snitch_0.1.4_darwin_amd64.tar.gz"
+    sha256 "744acefd3e4b84c1ffc018647a27d01daef537921c950f0b07c03a6545158767"
 
     define_method(:install) do
       bin.install "snitch"
       bin.install "snitchd"
-      prefix.install "Snitch Bar.app"
+      if File.directory?("Snitch Bar.app")
+        prefix.install "Snitch Bar.app"
+      elsif File.directory?("Contents")
+        (prefix/"Snitch Bar.app").install "Contents"
+      else
+        system buildpath/"scripts/bundle-snitchbar.sh", buildpath/"snitchbar", version, buildpath/"snitchd"
+        prefix.install "Snitch Bar.app"
+      end
       (share/"snitch").install "install/macos/com.snitch.menubar.plist"
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/fristovic/snitch/releases/download/v0.1.3/snitch_0.1.3_darwin_arm64.tar.gz"
-    sha256 "494e48a3b4bd86e8970036f7d322933f2337ca3b5da689507865e37031bbeae1"
+    url "https://github.com/fristovic/snitch/releases/download/v0.1.4/snitch_0.1.4_darwin_arm64.tar.gz"
+    sha256 "541dfd3097e0ec087aea59423eb10a2a60ef032a8139c7fe88f93476397b1b31"
 
     define_method(:install) do
       bin.install "snitch"
       bin.install "snitchd"
-      prefix.install "Snitch Bar.app"
+      if File.directory?("Snitch Bar.app")
+        prefix.install "Snitch Bar.app"
+      elsif File.directory?("Contents")
+        (prefix/"Snitch Bar.app").install "Contents"
+      else
+        system buildpath/"scripts/bundle-snitchbar.sh", buildpath/"snitchbar", version, buildpath/"snitchd"
+        prefix.install "Snitch Bar.app"
+      end
       (share/"snitch").install "install/macos/com.snitch.menubar.plist"
     end
   end
