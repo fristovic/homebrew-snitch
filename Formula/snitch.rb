@@ -5,13 +5,13 @@
 class Snitch < Formula
   desc "Catch Cursor agent lies in prose — local lie detector"
   homepage "https://github.com/fristovic/snitch"
-  version "0.1.2"
+  version "0.1.3"
   license "MIT"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/fristovic/snitch/releases/download/v0.1.2/snitch_0.1.2_darwin_amd64.tar.gz"
-    sha256 "08057d05278454546282ce45d8d8f33a195d0083fd6401d18767554b629ab4c5"
+    url "https://github.com/fristovic/snitch/releases/download/v0.1.3/snitch_0.1.3_darwin_amd64.tar.gz"
+    sha256 "2f0f4fb6ba94e6a8b727ef3806135cab59f829e6a99ba73dbae560f0a66e7e15"
 
     define_method(:install) do
       bin.install "snitch"
@@ -21,8 +21,8 @@ class Snitch < Formula
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/fristovic/snitch/releases/download/v0.1.2/snitch_0.1.2_darwin_arm64.tar.gz"
-    sha256 "ad84d3a4a090ff6a9bd4a5b650c6209812e7ddcdbeeb19c291589b16c600f1e9"
+    url "https://github.com/fristovic/snitch/releases/download/v0.1.3/snitch_0.1.3_darwin_arm64.tar.gz"
+    sha256 "494e48a3b4bd86e8970036f7d322933f2337ca3b5da689507865e37031bbeae1"
 
     define_method(:install) do
       bin.install "snitch"
@@ -40,6 +40,14 @@ class Snitch < Formula
       File.delete(daemon_plist)
     end
     app_path = File.join(opt_prefix, "Snitch Bar.app")
+    contents = File.join(app_path, "Contents")
+    unless File.directory?(File.join(contents, "MacOS"))
+      %w[MacOS Resources Info.plist].each do |name|
+        src = File.join(app_path, name)
+        FileUtils.mkdir_p(contents)
+        FileUtils.mv(src, File.join(contents, name)) if File.exist?(src)
+      end
+    end
     plist_src = File.join(share, "snitch", "com.snitch.menubar.plist")
     plist_dest = File.join(home, "Library/LaunchAgents/com.snitch.menubar.plist")
     if File.exist?(plist_src) && File.directory?(app_path)
