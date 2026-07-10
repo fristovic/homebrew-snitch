@@ -5,13 +5,13 @@
 class Snitch < Formula
   desc "Deterministic prose claim verifier for AI coding agents (Cursor, Claude Code, Codex, Pi, OpenCode)"
   homepage "https://github.com/fristovic/snitch"
-  version "0.4.0"
+  version "0.4.1"
   license "MIT"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/fristovic/snitch/releases/download/v0.4.0/snitch_0.4.0_darwin_amd64.tar.gz"
-    sha256 "5a4036ba10025a563fceee01ad06d23db71b82675922e8f772f90816d93bc40b"
+    url "https://github.com/fristovic/snitch/releases/download/v0.4.1/snitch_0.4.1_darwin_amd64.tar.gz"
+    sha256 "1f4b4c7f958ded0e276da25a540772774f3cfb509bb4de6ec9bb55544bef7b6e"
 
     define_method(:install) do
       bin.install "snitch"
@@ -28,8 +28,8 @@ class Snitch < Formula
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/fristovic/snitch/releases/download/v0.4.0/snitch_0.4.0_darwin_arm64.tar.gz"
-    sha256 "f7661ec0cc74c13b9f90ecb282c3e254bd3c40a4c80d58973bd771f478897300"
+    url "https://github.com/fristovic/snitch/releases/download/v0.4.1/snitch_0.4.1_darwin_arm64.tar.gz"
+    sha256 "d031324e4b3ad7bfeb04dd15301b1e238cfd120617aba90400f21afa0e5a6ac5"
 
     define_method(:install) do
       bin.install "snitch"
